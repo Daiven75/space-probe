@@ -47,7 +47,7 @@ public class PlanetResourceTest {
     @BeforeEach
     void init() {
         Galaxy galaxy = new Galaxy();
-        galaxy.setId("09f9e805-24dd-11ed-8f60-0242ac110002");
+        galaxy.setId("41829c9682f032bd0182f0330a540000");
         galaxy.setName("GalaxyA");
 
         this.planet = new Planet();
