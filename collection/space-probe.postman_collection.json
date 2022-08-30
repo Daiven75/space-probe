@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "1d07f40f-8ebe-407f-8657-1cad04778f3a",
+		"name": "space-probe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10293211"
+	},
+	"item": [
+		{
+			"name": "probe",
+			"item": [
+				{
+					"name": "/probes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"probe39\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:6868/probes",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"probes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/probes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:6868/probes",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"probes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/probes/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:6868/probes/2c94808382f05fd30182f06196ee0000",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"probes",
+								"2c94808382f05fd30182f06196ee0000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/probes/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"RR\",\n    \"planetId\": \"2c94808382f0423a0182f042f6ed0000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:6868/probes/2c94808382f05fd30182f06196ee0000",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"probes",
+								"2c94808382f05fd30182f06196ee0000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "planet",
+			"item": [
+				{
+					"name": "/planets",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"PlanetB\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:6868/planets",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"planets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/planets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:6868/planets",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"planets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/planets/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:6868/planets/2c94808382f00f8c0182f010fa590001",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"planets",
+								"2c94808382f00f8c0182f010fa590001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "galaxy",
+			"item": [
+				{
+					"name": "/galaxies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"galaxyC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:6868/galaxies",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"galaxies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/galaxies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:6868/galaxies",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"galaxies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/galaxies/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:6868/galaxies/724832fb-2893-11ed-b013-0242ac140002",
+							"host": [
+								"localhost"
+							],
+							"port": "6868",
+							"path": [
+								"galaxies",
+								"724832fb-2893-11ed-b013-0242ac140002"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
