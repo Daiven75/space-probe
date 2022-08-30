@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  sp-app:
+    depends_on:
+      - db-mysql
+    build:
+      dockerfile: dockerfile
+      context: .
+    image: daiven75/space-probe
+    ports:
+    - "6868:8080"
+    networks:
+      - sp-network
+    restart: on-failure
+    environment:
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.JPA.HIBERNATE.DDL-AUTO: update
+      SPRING.DATASOURCE.URL: jdbc:mysql://db-mysql/space-probe?useTimezone=true&serverTimezone=UTC
+      SPRING.JPA.HIBERNATE.FORMAT_SQL: trueUNIQUE (name)
+      SPRING.JPA.HIBERNATE.DIALECT: org.hibernate.dialect.MySQL8Dialect
+  db-mysql:
+    image: mysql:8.0.29
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: space-probe
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - sp-network
+volumes:
+  db-data:
+networks:
+  sp-network:
+    driver: bridge
