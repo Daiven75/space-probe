@@ -90,7 +90,7 @@ public class ProbeService {
             throw new ProbeWanderingInSpaceException(ErroType.PROBE_WANDERING_IN_SPACE.toString());
         }
 
-        var planet = planetService.getPlanetById(planetId);
+        var planet = planetService.getPlanetById(probe.getPlanet().getId());
 
         var probeWithPlanetChangeOrWithoutAssociatedPlanet = !Objects.deepEquals(planet, probe.getPlanet());
 
