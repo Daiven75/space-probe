@@ -86,11 +86,7 @@ public class ProbeService {
         var probe = getProbeById(probeId);
         String planetId = probeUpdateDto.planetId();
 
-        if(Objects.isNull(planetId) && probe.getStatus().equals(StatusProbe.WALKING_IN_SPACE)) {
-            throw new ProbeWanderingInSpaceException(ErroType.PROBE_WANDERING_IN_SPACE.toString());
-        }
-
-        var planet = planetService.getPlanetById(probe.getPlanet().getId());
+        var planet = findPlanet(probe, planetId);
 
         var probeWithPlanetChangeOrWithoutAssociatedPlanet = !Objects.deepEquals(planet, probe.getPlanet());
 
@@ -128,6 +124,16 @@ public class ProbeService {
         var updateProbe = repository.save(probe);
 
         return converter.toProbeUpdateResponseDto(updateProbe, messageStatusPlanet);
+    }
+
+    private Planet findPlanet(Probe probe, String planetId) {
+        if(Objects.isNull(planetId) && probe.getStatus().equals(StatusProbe.WALKING_IN_SPACE)) {
+            throw new ProbeWanderingInSpaceException(ErroType.PROBE_WANDERING_IN_SPACE.toString());
+        } else if(Objects.isNull(planetId) && Objects.nonNull(probe.getPlanet())) {
+            planetId = probe.getPlanet().getId();
+        }
+
+        return planetService.getPlanetById(planetId);
     }
 
     private String checkingPossibleCollisionBetweenProbes(Probe probe, Planet planet) {
