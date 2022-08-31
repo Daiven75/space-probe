@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lucasilva.spaceprobe.dto.ProbeAllDataDto;
 import com.lucasilva.spaceprobe.dto.ProbeResponseDto;
 import com.lucasilva.spaceprobe.dto.ProbeUpdateDto;
 import com.lucasilva.spaceprobe.dto.ProbeUpdateResponseDto;
@@ -47,6 +48,8 @@ public class ProbeResourceTest {
 
     private Probe probe;
 
+    private ProbeAllDataDto probeAllDataDto;
+
     private ProbeResponseDto probeResponseDto;
 
     private ProbeUpdateResponseDto probeUpdateResponseDto;
@@ -73,6 +76,8 @@ public class ProbeResourceTest {
         probe.setPositionY(3);
         probe.setEditedAt(LocalDateTime.now());
         probe.setCreatedAt(LocalDateTime.now());
+
+        this.probeAllDataDto = new ProbeAllDataDto(this.probe);
 
         this.probeResponseDto = new ProbeResponseDto(
                 probe.getId(),
@@ -114,7 +119,7 @@ public class ProbeResourceTest {
 
     @Test
     public void getProbeByIdWithSucess() throws Exception {
-        doReturn(probe).when(service).getProbeById(probe.getId());
+        doReturn(probeAllDataDto).when(service).getProbeAllDataById(probe.getId());
 
         this.mockMvc.perform(get("/probes/41829c9682e347290182e3480c300000"))
                 .andExpect(status().isOk())
@@ -125,7 +130,7 @@ public class ProbeResourceTest {
     @Test
     public void getProbeByIdThrowException() throws Exception {
         doThrow(new ObjectNotFoundException(ErroType.PROBE_NOT_FOUND.toString()))
-                .when(service).getProbeById("fsad3421432");
+                .when(service).getProbeAllDataById("fsad3421432");
 
         this.mockMvc.perform(get("/probes/fsad3421432"))
                 .andExpect(status().isNotFound())

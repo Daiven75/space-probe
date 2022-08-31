@@ -1,6 +1,7 @@
 package com.lucasilva.spaceprobe.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lucasilva.spaceprobe.dto.PlanetAllDataDto;
 import com.lucasilva.spaceprobe.dto.PlanetDto;
 import com.lucasilva.spaceprobe.dto.PlanetResponseDto;
 import com.lucasilva.spaceprobe.enums.ErroType;
@@ -40,6 +41,8 @@ public class PlanetResourceTest {
 
     private Planet planet;
 
+    private PlanetAllDataDto planetAllDataDto;
+
     private PlanetDto planetDto;
 
     private PlanetResponseDto planetResponseDto;
@@ -55,6 +58,8 @@ public class PlanetResourceTest {
         planet.setName("PlanetA");
         planet.setSizeAreaPlanet(5);
         planet.setGalaxy(galaxy);
+
+        this.planetAllDataDto = new PlanetAllDataDto(this.planet);
 
         this.planetDto = new PlanetDto("PlanetA", galaxy.getId());
 
@@ -83,7 +88,7 @@ public class PlanetResourceTest {
 
     @Test
     public void getPlanetByIdWithSucess() throws Exception {
-        doReturn(planet).when(service).getPlanetById(planet.getId());
+        doReturn(planetAllDataDto).when(service).getPlanetAllDataById(planet.getId());
 
         this.mockMvc.perform(get("/planets/41829c9682e5d9530182e5d96bf10000"))
                 .andExpect(status().isOk())
@@ -94,7 +99,7 @@ public class PlanetResourceTest {
     @Test
     public void getPlanetByIdThrowException() throws Exception {
         doThrow(new ObjectNotFoundException(ErroType.PLANET_NOT_FOUND.toString()))
-                .when(service).getPlanetById("fsad3421432");
+                .when(service).getPlanetAllDataById("fsad3421432");
 
         this.mockMvc.perform(get("/planets/fsad3421432"))
                 .andExpect(status().isNotFound())

@@ -6,10 +6,7 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.when;
 import static org.mockito.BDDMockito.given;
 
-import com.lucasilva.spaceprobe.dto.ProbeDto;
-import com.lucasilva.spaceprobe.dto.ProbeResponseDto;
-import com.lucasilva.spaceprobe.dto.ProbeUpdateDto;
-import com.lucasilva.spaceprobe.dto.ProbeUpdateResponseDto;
+import com.lucasilva.spaceprobe.dto.*;
 import com.lucasilva.spaceprobe.enums.DirectionProbe;
 import com.lucasilva.spaceprobe.enums.StatusProbe;
 import com.lucasilva.spaceprobe.model.Galaxy;
@@ -53,6 +50,8 @@ public class ProbeServiceTest {
 
     private Probe probe;
 
+    private ProbeAllDataDto probeAllDataDto;
+
     private ProbeResponseDto probeResponseDto;
 
     private ProbeUpdateResponseDto probeUpdateResponseDto;
@@ -79,6 +78,8 @@ public class ProbeServiceTest {
         probe.setPositionY(3);
         probe.setEditedAt(LocalDateTime.now());
         probe.setCreatedAt(LocalDateTime.now());
+
+        this.probeAllDataDto = new ProbeAllDataDto(this.probe);
 
         this.probeResponseDto = new ProbeResponseDto(
                 probe.getId(),
@@ -148,7 +149,7 @@ public class ProbeServiceTest {
 
         Assertions.assertThatCode(() -> {
             var probe = service.createProbe(probeDto);
-            if(!Objects.equals(StatusProbe.WALKING_IN_SPACE, probe.status())) {
+            if(!Objects.equals(StatusProbe.WALKING_IN_SPACE, probe.getStatus())) {
                 throw new RuntimeException("probe is not wandering through space");
             }
         }).doesNotThrowAnyException();
@@ -176,8 +177,9 @@ public class ProbeServiceTest {
     @Test
     public void getProbeByIdThenReturnProbeObject(){
         given(repository.findById(probe.getId())).willReturn(Optional.of(probe));
+        given(converter.toProbeAllDataDto(probe)).willReturn(probeAllDataDto);
 
-        var savedProbe = service.getProbeById(probe.getId());
+        var savedProbe = service.getProbeAllDataById(probe.getId());
 
         Assertions.assertThat(savedProbe).isNotNull();
     }
@@ -187,7 +189,7 @@ public class ProbeServiceTest {
     public void getProbeByIdButThrowException(){
         given(repository.findById("fsad3421432")).willReturn(Optional.empty());
 
-        Assertions.assertThatCode(() -> service.getProbeById("fsad3421432"))
+        Assertions.assertThatCode(() -> service.getProbeAllDataById("fsad3421432"))
                 .isInstanceOf(ObjectNotFoundException.class)
                 .hasMessageContaining("PRB-0003");
     }
@@ -209,8 +211,8 @@ public class ProbeServiceTest {
 
         var probeUpdate = service.updateProbe(probe.getId(), probeUpdateDto);
 
-        Assertions.assertThat(probeUpdate.status()).isEqualTo(StatusProbe.ACTIVE);
-        Assertions.assertThat(probeUpdate.direction()).isEqualTo(DirectionProbe.NORTH);
+        Assertions.assertThat(probeUpdate.getStatus()).isEqualTo(StatusProbe.ACTIVE);
+        Assertions.assertThat(probeUpdate.getDirection()).isEqualTo(DirectionProbe.NORTH);
     }
 
     @DisplayName("Try update probe, but not associated with a planet and not in active status")
@@ -249,8 +251,8 @@ public class ProbeServiceTest {
 
         var probeUpdateResponse = service.updateProbe(probe.getId(), probeUpdateDto);
 
-        Assertions.assertThat(probeUpdateResponse.status()).isEqualTo(StatusProbe.ACTIVE);
-        Assertions.assertThat(probeUpdateResponse.direction()).isEqualTo(DirectionProbe.NORTH);
+        Assertions.assertThat(probeUpdateResponse.getStatus()).isEqualTo(StatusProbe.ACTIVE);
+        Assertions.assertThat(probeUpdateResponse.getDirection()).isEqualTo(DirectionProbe.NORTH);
     }
 
     @DisplayName("Update probe that is wandering through space to a planet")
@@ -290,6 +292,6 @@ public class ProbeServiceTest {
 
         var probeUpdateResponse = service.updateProbe(probe.getId(), probeUpdateDto);
 
-        Assertions.assertThat(probeUpdateResponse.statusPlanet().contains("collided")).isEqualTo(Boolean.TRUE);
+        Assertions.assertThat(probeUpdateResponse.getStatusPlanet().contains("collided")).isEqualTo(Boolean.TRUE);
     }
 }

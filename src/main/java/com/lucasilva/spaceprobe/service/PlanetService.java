@@ -1,16 +1,14 @@
 package com.lucasilva.spaceprobe.service;
 
+import com.lucasilva.spaceprobe.dto.PlanetAllDataDto;
 import com.lucasilva.spaceprobe.dto.PlanetDto;
 import com.lucasilva.spaceprobe.dto.PlanetResponseDto;
-import com.lucasilva.spaceprobe.dto.ProbeResponseDto;
 import com.lucasilva.spaceprobe.enums.ErroType;
 import com.lucasilva.spaceprobe.model.Galaxy;
 import com.lucasilva.spaceprobe.model.Planet;
-import com.lucasilva.spaceprobe.model.Probe;
 import com.lucasilva.spaceprobe.repository.PlanetRepository;
 import com.lucasilva.spaceprobe.service.exceptions.ObjectNotFoundException;
 import com.lucasilva.spaceprobe.service.exceptions.PlanetAlreadyExistsException;
-import com.lucasilva.spaceprobe.service.exceptions.ProbeAlreadyExistsException;
 import com.lucasilva.spaceprobe.utils.CustomerConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -55,6 +53,10 @@ public class PlanetService {
         var newPlanet = repository.save(planet);
 
         return converter.toPlanetResponseDto(newPlanet);
+    }
+
+    public PlanetAllDataDto getPlanetAllDataById(String planetId) {
+        return converter.toPlanetAllDataDto(getPlanetById(planetId));
     }
 
     public Planet getPlanetById(String planetId) {

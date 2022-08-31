@@ -1,9 +1,6 @@
 package com.lucasilva.spaceprobe.service;
 
-import com.lucasilva.spaceprobe.dto.ProbeDto;
-import com.lucasilva.spaceprobe.dto.ProbeResponseDto;
-import com.lucasilva.spaceprobe.dto.ProbeUpdateDto;
-import com.lucasilva.spaceprobe.dto.ProbeUpdateResponseDto;
+import com.lucasilva.spaceprobe.dto.*;
 import com.lucasilva.spaceprobe.enums.ErroType;
 import com.lucasilva.spaceprobe.enums.StatusProbe;
 import com.lucasilva.spaceprobe.model.Planet;
@@ -76,7 +73,11 @@ public class ProbeService {
                 .toList();
     }
 
-    public Probe getProbeById(String probeId) {
+    public ProbeAllDataDto getProbeAllDataById(String probeId) {
+        return converter.toProbeAllDataDto(getProbeById(probeId));
+    }
+
+    private Probe getProbeById(String probeId) {
         var probe = repository.findById(probeId);
         return probe.orElseThrow(
                 () -> new ObjectNotFoundException(ErroType.PROBE_NOT_FOUND.toString()));

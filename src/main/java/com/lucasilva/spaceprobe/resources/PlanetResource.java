@@ -1,8 +1,8 @@
 package com.lucasilva.spaceprobe.resources;
 
+import com.lucasilva.spaceprobe.dto.PlanetAllDataDto;
 import com.lucasilva.spaceprobe.dto.PlanetDto;
 import com.lucasilva.spaceprobe.dto.PlanetResponseDto;
-import com.lucasilva.spaceprobe.model.Planet;
 import com.lucasilva.spaceprobe.service.PlanetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +25,8 @@ public class PlanetResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Planet> getPlanetById(@PathVariable String id) {
-        return ResponseEntity.ok(service.getPlanetById(id));
+    public ResponseEntity<PlanetAllDataDto> getPlanetById(@PathVariable String id) {
+        return ResponseEntity.ok(service.getPlanetAllDataById(id));
     }
 
     @GetMapping

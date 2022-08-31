@@ -1,10 +1,6 @@
 package com.lucasilva.spaceprobe.resources;
 
-import com.lucasilva.spaceprobe.dto.ProbeDto;
-import com.lucasilva.spaceprobe.dto.ProbeResponseDto;
-import com.lucasilva.spaceprobe.dto.ProbeUpdateDto;
-import com.lucasilva.spaceprobe.dto.ProbeUpdateResponseDto;
-import com.lucasilva.spaceprobe.model.Probe;
+import com.lucasilva.spaceprobe.dto.*;
 import com.lucasilva.spaceprobe.service.ProbeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +29,8 @@ public class ProbeResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Probe> getProbeById(@PathVariable String id) {
-        return ResponseEntity.ok(service.getProbeById(id));
+    public ResponseEntity<ProbeAllDataDto> getProbeById(@PathVariable String id) {
+        return ResponseEntity.ok(service.getProbeAllDataById(id));
     }
 
     @PutMapping("/{id}")
